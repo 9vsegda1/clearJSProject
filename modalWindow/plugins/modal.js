@@ -49,20 +49,28 @@ function _createModal(options) {
   return modal
 }
 
+function _closeModal(){
+  modal.close()
+}
+
 $.modal = function(options) {
   const ANIMATION_SPEED = 200
   const $modal = _createModal(options)
   let closing = false
+
   let destroyed = false
 
   const modal = {
+
     open() {
       if (destroyed) {
         return console.log('Modal is destroyed')
       }
       !closing && $modal.classList.add('open')
+      $modal._onOpen && $modal._onOpen()
     },
     close() {
+      $modal._beforeClose && $modal._beforeClose()
       closing = true
       $modal.classList.remove('open')
       $modal.classList.add('hide')
