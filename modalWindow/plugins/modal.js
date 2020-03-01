@@ -78,6 +78,7 @@ $.modal = function(options) {
         $modal.classList.remove('hide')
         closing = false
       }, ANIMATION_SPEED)
+      $modal._onClose && $modal._onClose()
     },
   }
 
@@ -96,6 +97,15 @@ $.modal = function(options) {
     },
     setContent(html) {
       $modal.querySelector('[data-content]').innerHTML = html
+    },
+    onClose(f) {
+      $modal._onClose = f
+    },
+    onOpen(f) {
+      $modal._onOpen = f
+    },
+    beforeClose(f) {
+      $modal._beforeClose = f
     }
   })
 }
