@@ -1,10 +1,10 @@
-function _createModal(options) {
+function _createModal(options = {}) {
   const modal = document.createElement('div')
   modal.classList.add('vmodal')
   modal.insertAdjacentHTML('afterbegin',`
 
     <div class="modal-overlay">
-      <div class="modal-window" style="width: ${options.width || '400px'}">
+      <div class="modal-window" style="width: ${options.width ? options.width : '400px'}">
         <div class="modal-header">
           <span class="modal-title">${options.title || ''}</span>
           <span class="modal-close">${options.closable ? '&times;' : '' }</span>
