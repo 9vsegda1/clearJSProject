@@ -39,8 +39,10 @@ $.modal = function(options) {
   return {
     open() {
       !closing && $modal.classList.add('open')
+      $modal._onOpen && $modal._onOpen()
     },
     close() {
+      $modal._beforeClose && $modal._beforeClose()
       closing = true
       $modal.classList.remove('open')
       $modal.classList.add('hide')
@@ -48,11 +50,24 @@ $.modal = function(options) {
         $modal.classList.remove('hide')
         closing = false
       }, ANIMATION_SPEED)
-
+      $modal._onClose && $modal._onClose()
     },
     destroy() {
-      $modal.remove()      
-    }
+      $modal.remove()
+    },
+    setContent(content) {
+      $modal.querySelector('.modal-body').innerHTML = ''
+      $modal.querySelector('.modal-body').insertAdjacentHTML('afterbegin', content)
+    },
+    onClose(f = () => {}) {
+      $modal._onClose = f
+    },
+    onOpen(f = () => {}) {
+      $modal._onOpen = f
+    },
+    beforeClose(f = () => {}) {
+      $modal._beforeClose = f
+    },
   }
 }
 

@@ -6,3 +6,4 @@ const modal = $.modal({
      width: '800px'
 })
 // myModal.open()
+modal.onClose(() => console.log('on close hook'))
