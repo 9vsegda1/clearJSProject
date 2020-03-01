@@ -25,10 +25,17 @@ function _createModal(options = {}) {
   return modal
 }
 
+function _closeModal(){
+  modal.close()
+}
+
 $.modal = function(options) {
   const ANIMATION_SPEED = 200
   const $modal = _createModal(options)
   let closing = false
+  $modal.querySelector('.modal-close').onclick =  _closeModal
+  $modal.querySelector('.modal-window').onclick = (event) => event.stopPropagation()
+  $modal.querySelector('.modal-overlay').onclick =  _closeModal
   return {
     open() {
       !closing && $modal.classList.add('open')
@@ -44,7 +51,7 @@ $.modal = function(options) {
 
     },
     destroy() {
-      $modal.remove()
+      $modal.remove()      
     }
   }
 }
