@@ -5,35 +5,6 @@ const fruits = [
 ]
 
 
-
-function cardsGenerate(cards){
-  const wrap = document.createElement('div')
-  wrap.classList.add('row')
-
-  cards.forEach(elem => {
-
-    const card = document.createElement('div')
-    card.classList.add('col')
-    card.insertAdjacentHTML('afterbegin', `
-      <div class="card">
-        <img class="card-img-top" style="height: 300px" src="${elem.img}" alt="Card image">
-        <div class="card-body">
-          <h5 class="card-title">${elem.title}</h5>
-          <a href="#" class="btn btn-primary">Посмотреть цену</a>
-          <a href="#" class="btn btn-danger">Удалить</a>
-        </div>
-      </div>
-    `)
-
-    wrap.appendChild(card)
-  })
-
-  return wrap
-}
-
-document.querySelector('.container').append(cardsGenerate(fruits))
-
-
 /*
 * 1. Динамически на основе массива вывести список карточек +
 * 2. Показать цену в модалке (это должна быть одна модалка)
@@ -44,6 +15,60 @@ document.querySelector('.container').append(cardsGenerate(fruits))
 *
 *
 * */
+
+function cardsGenerate(cards){
+  const wrap = document.createElement('div')
+  wrap.classList.add('row')
+
+
+
+  cards.forEach(elem => {
+
+    const card = document.createElement('div')
+    card.classList.add('col')
+    card.insertAdjacentHTML('afterbegin', `
+      <div class="card">
+        <img class="card-img-top" style="height: 300px" src="${elem.img}" alt="Card image">
+        <div class="card-body">
+          <h5 class="card-title">${elem.title}</h5>
+          <a href="" class="btn btn-primary" data-info="true">Посмотреть цену</a>
+          <a href="#" class="btn btn-danger">Удалить</a>
+        </div>
+      </div>
+    `)
+
+    card.querySelector('.btn-primary').addEventListener('click', (event) => {
+        event.preventDefault()
+        const cardModal = $.modal({
+          closable: true,
+          content: `Цена: ${elem.price}`,
+          title: elem.title,
+          width: '400px',
+          footerButtons: [
+            {text: 'Ok', type: 'primary', handler() {
+            cardModal.close()
+            }},
+          ]
+        })
+        cardModal.open()
+        cardModal.onClose(() => cardModal.destroy())
+
+      } )
+
+    wrap.appendChild(card)
+  })
+
+  return wrap
+}
+
+document.querySelector('.container').append(cardsGenerate(fruits))
+
+
+
+
+
+
+
 
 
 

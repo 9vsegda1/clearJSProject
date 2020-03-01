@@ -91,7 +91,7 @@ $.modal = function(options) {
   $modal.addEventListener('click', listener)
   return Object.assign(modal, {
     destroy() {
-      $modal.parentNode.removeChild($modal)
+      $modal.remove()
       $modal.removeEventListener('click', listener)
       destroyed = true
     },
