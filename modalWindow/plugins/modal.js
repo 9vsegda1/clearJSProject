@@ -4,14 +4,13 @@ function _createModal(options) {
   modal.insertAdjacentHTML('afterbegin',`
 
     <div class="modal-overlay">
-      <div class="modal-window">
+      <div class="modal-window" style="width: ${options.width || '400px'}">
         <div class="modal-header">
-          <span class="modal-title">Modal title</span>
-          <span class="modal-close">&times;</span>
+          <span class="modal-title">${options.title || ''}</span>
+          <span class="modal-close">${options.closable ? '&times;' : '' }</span>
         </div>
         <div class="modal-body">
-          <p>Lorem ipsum dolor sit.</p>
-          <p>Lorem ipsum dolor sit.</p>
+          ${options.content || ''}
         </div>
         <div class="modal-footer">
           <button>Ok</button>
@@ -25,23 +24,6 @@ function _createModal(options) {
   document.body.appendChild(modal)
   return modal
 }
-
-/*
-* title: string
-* closable: boolean
-* content: string
-* width: string ('400px')
-* destroy(): void
-* Окно должно закрываться
-* -----++++
-* setContent(html: string): void | PUBLIC
-* onClose(): void
-* onOpen(): void
-* beforeClose(): boolean
-* ======= animate
-
-* */
-
 
 $.modal = function(options) {
   const ANIMATION_SPEED = 200
@@ -61,6 +43,27 @@ $.modal = function(options) {
       }, ANIMATION_SPEED)
 
     },
-    destroy() {}
+    destroy() {
+      $modal.remove()
+    }
   }
 }
+
+
+/*
+* options = {
+*   title: string
+*   closable: boolean
+*   content: string
+*   width: string ('400px')
+* }
+* destroy(): void
+* Окно должно закрываться
+* -----++++
+* setContent(html: string): void | PUBLIC
+* onClose(): void
+* onOpen(): void
+* beforeClose(): boolean
+* ======= animate
+
+* */
