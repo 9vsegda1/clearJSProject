@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 const fruits = [
-  {id: 1, title: 'Яблоки', price: 20, img: ''}
-  {id: 2, title: 'Апельсины', price: 30, img: ''}
-  {id: 3, title: 'Манго', price: 40, img: ''}
+  {id: 1, title: 'Яблоки', price: 20, img: ''},
+  {id: 2, title: 'Апельсины', price: 30, img: ''},
+  {id: 3, title: 'Манго', price: 40, img: ''},
 ]
 
 
@@ -33,14 +32,6 @@ const modal = $.modal({
       console.log('Danger btn clicked')
     }}
   ]
-=======
-const modal = $.modal({
-     title: 'Modal title',
-     closable: true,
-     content: `<p>TEST TES TEST</p>
-               <p>Lorem ipsum dolor.</p> `,
-     width: '800px'
->>>>>>> master
 })
 // myModal.open()
 modal.onClose(() => console.log('on close hook'))
