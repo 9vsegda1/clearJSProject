@@ -7,7 +7,7 @@ const fruits = [
 
 /*
 * 1. Динамически на основе массива вывести список карточек +
-* 2. Показать цену в модалке (это должна быть одна модалка)
+* 2. Показать цену в модалке (это должна быть одна модалка) +
 * 3. Модалка для удаления с 2мя кнопками (удалить отмена)
 * --------------------
 * 4. При удалении убрать карточку из дом дерева
@@ -31,13 +31,13 @@ function cardsGenerate(cards){
         <img class="card-img-top" style="height: 300px" src="${elem.img}" alt="Card image">
         <div class="card-body">
           <h5 class="card-title">${elem.title}</h5>
-          <a href="" class="btn btn-primary" data-info="true">Посмотреть цену</a>
+          <a href="" class="btn btn-primary">Посмотреть цену</a>
           <a href="#" class="btn btn-danger">Удалить</a>
         </div>
       </div>
     `)
 
-    card.querySelector('.btn-primary').addEventListener('click', (event) => {
+    card.querySelector('.btn-primary').addEventListener('click', (event) => {      //PRICE MODAL
         event.preventDefault()
         const cardModal = $.modal({
           closable: true,
@@ -55,6 +55,28 @@ function cardsGenerate(cards){
 
       } )
 
+      card.querySelector('.btn-danger').addEventListener('click', (event) => {      //DELETE MODAL
+          event.preventDefault()
+          const cardModal = $.modal({
+            closable: true,
+            content: `Удалить ${elem.title}?`,
+            title: 'УДАЛЕНИЕ',
+            width: '400px',
+            footerButtons: [
+              {text: 'Удалить', type: 'danger', handler() {
+                card.remove()
+                cardModal.close()
+              }},
+              {text: 'Отменить', type: 'primary', handler() {
+                cardModal.close()
+              }}
+            ]
+          })
+          cardModal.open()
+          cardModal.onClose(() => cardModal.destroy())
+
+        } )
+
     wrap.appendChild(card)
   })
 
@@ -62,46 +84,26 @@ function cardsGenerate(cards){
 }
 
 document.querySelector('.container').append(cardsGenerate(fruits))
+// added cards to container ***************************************************************************
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-const modal = $.modal({
-  title: 'Test title',
-  closable: true,
-  content: `
-    <p>Lorem ipsum dolor sit.</p>
-    <p>Lorem ipsum dolor sit.</p>
-  `,
-  width: '400px',
-  footerButtons: [
-    {text: 'Ok', type: 'primary', handler() {
-      console.log('Primary btn clicked')
-    }},
-    {text: 'Cansel', type: 'danger', handler() {
-      console.log('Danger btn clicked')
-    }}
-  ]
-})
-
-
-
-
-
-
-
-
-
-
+// const modal = $.modal({
+//   title: 'Test title',
+//   closable: true,
+//   content: `
+//     <p>Lorem ipsum dolor sit.</p>
+//     <p>Lorem ipsum dolor sit.</p>
+//   `,
+//   width: '400px',
+//   footerButtons: [
+//     {text: 'Ok', type: 'primary', handler() {
+//       console.log('Primary btn clicked')
+//     }},
+//     {text: 'Cansel', type: 'danger', handler() {
+//       console.log('Danger btn clicked')
+//     }}
+//   ]
+// })
 // myModal.open()
-modal.onClose(() => console.log('on close hook'))
+// modal.onClose(() => console.log('on close hook'))
